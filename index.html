@@ -4,12 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
+    <script src="./app.js" defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="calc-body">
             <div class="visor"></div>
-            <div class="buttons"></div>
+            <div class="buttons">
+                <div class="left">
+                    <div class="one"></div>
+                    <div class="two"></div>
+                    <div class="three"></div>
+                    <div class="four">
+                        <button>0</button>
+                        <button>.</button>
+                        <button>=</button>
+                    </div>
+                </div>
+                <div class="right">
+                    <button class="add">+</button>
+                    <button class="substract">-</button>
+                    <button class="multiply">*</button>
+                    <button class="divide">/</button>
+                </div>
+            </div>
+            <button class="clear"></button>
         </div>
     </div>
 </body>
