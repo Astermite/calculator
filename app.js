@@ -1,5 +1,5 @@
 function add(n1,n2) {
-    return n1 + n2;
+    return parseInt(n1) + parseInt(n2);
 }
 function substract(n1,n2) {
     return n1 - n2;
@@ -8,6 +8,7 @@ function multiply(n1,n2) {
     return n1 * n2;
 }
 function divide(n1,n2) {
+    if (n2 == 0) return 'CANNOT DIVIDE BY ZERO YOU FOOL!'
     return n1/n2;
 }
 let firstNumber;
@@ -61,14 +62,47 @@ const multOp = document.querySelector('.multOp')
 const diviOp = document.querySelector('.diviOp')
 const Ops = [addOp,subOp,multOp,diviOp]
 const numOp = numbers.concat(Ops)
+let displayValue;
+const equalBtn = document.querySelector('.equal')
 
-
+equalBtn.addEventListener('click',() => showResult(displayValue))
 clearBtn.addEventListener('click', clear)
-numOp.forEach((item) => item.addEventListener('click', () => display(item.textContent)))
+numbers.forEach((item) => item.addEventListener('click', () => display(item.textContent)))
+Ops.forEach((item) => item.addEventListener('click', () => display(' ' + item.textContent + ' ')))
 function display(input) {
     visor.textContent += input
+    displayValue = visor.textContent
 }
-
 function clear() {
     visor.textContent = ''
+}
+
+function getResult(material) {
+    // let hasHigherOps = /[/*]/.test(material)
+    // let hasLowerOps = /[+-]/.test(material)
+    let materialArr = material.split(' ')//.map((item) => item.slice(0,-1))
+
+    while (true) {
+    if (findFirstIndex(materialArr, ['/','*']) >= 0) {
+        let index = findFirstIndex(materialArr, ['/','*'])
+        firstNumber = operate(materialArr[index-1],materialArr[index],materialArr[index+1])
+        if (firstNumber = 'CANNOT DIVIDE BY ZERO YOU FOOL!') 
+        materialArr.splice(index-1,3,firstNumber)
+    } else if (findFirstIndex(materialArr,['+','-']) >= 0) {
+        let index = findFirstIndex(materialArr,['+','-'])
+        firstNumber = operate(materialArr[index-1],materialArr[index],materialArr[index+1])
+        materialArr.splice(index-1,3,firstNumber)
+    } else break;
+    }
+    return firstNumber;
+}
+function showResult(material) {
+    clear()
+    display(getResult(material))
+}
+function findFirstIndex(array,toLookFor) {
+    let index1 = array.indexOf(toLookFor[0])
+    let index2 = array.indexOf(toLookFor[1])
+    if (index1 >= 0 && index2 >= 0) return Math.min(index1,index2)
+    else return Math.max(index1,index2)
 }
