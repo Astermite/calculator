@@ -1,0 +1,78 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: auto;
+}
+.body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:400%;
+}
+.calc-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.visor {
+    min-height: 100px;
+    min-width: 600px;
+    text-align: end;
+    flex: 1 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:400%;
+}
+.buttons {
+    display: flex;
+    width: 600px;
+    height: 600px;
+    justify-content: center;
+    flex: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:400%;
+}
+.left {
+    flex: 10 auto;
+    display: flex;
+    flex-direction: column;
+}
+.column {
+    flex: 1 1 auto;
+    display: flex;
+
+}
+.num {
+    flex: 1 1 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:70%;
+}
+
+.right {
+    flex:auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:70%;
+}
+.Op {
+    flex: 1 1 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:70%;
+}
+.low {
+    flex: 1 1 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:70%;
+}
+.lower {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 70px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:150%;
+    width: 600px;
+}

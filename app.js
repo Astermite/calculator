@@ -1,5 +1,6 @@
 function add(n1,n2) {
-    return parseInt(n1) + parseInt(n2);
+    
+    return convertToNumber(n1) + convertToNumber(n2);
 }
 function substract(n1,n2) {
     return n1 - n2;
@@ -11,9 +12,6 @@ function divide(n1,n2) {
     if (n2 == 0) return 'CANNOT DIVIDE BY ZERO YOU FOOL!'
     return n1/n2;
 }
-let firstNumber;
-let secondNumber;
-let operator;
 
 function operate(firstNumber,operator,secondNumber) {
     switch (operator) {
@@ -30,6 +28,14 @@ function operate(firstNumber,operator,secondNumber) {
     }
 }
 
+function convertToNumber(input) {
+    if (input.includes('.')) {
+        return parseFloat(input);
+    } else {
+        return parseInt(input);
+    }
+}
+
 const first = document.querySelector('.first')
 const second = document.querySelector('.second')
 const third = document.querySelector('.third')
@@ -38,6 +44,7 @@ for (let i=1; i < 10; i++) {
     let btn = document.createElement('button')
     btn.textContent = `${i}`
     btn.classList.add(`b${i}`)
+    btn.classList.add('num')
     if (i < 10 && i > 6) first.appendChild(btn)
     else if (i < 7 && i > 3) second.appendChild(btn)
     else if (i < 4 && i > 0) third.appendChild(btn)
@@ -56,19 +63,42 @@ const zero = document.querySelector('.b0')
 const visor = document.querySelector('.visor')
 const clearBtn = document.querySelector('.clear')
 const numbers = [one,two,three,four,five,six,seven,eight,nine,zero] 
-const addOp = document.querySelector('.addOp')
-const subOp = document.querySelector('.subOp')
-const multOp = document.querySelector('.multOp')
-const diviOp = document.querySelector('.diviOp')
+const addOp = document.querySelector('.add')
+const subOp = document.querySelector('.sub')
+const multOp = document.querySelector('.mult')
+const diviOp = document.querySelector('.divi')
 const Ops = [addOp,subOp,multOp,diviOp]
 const numOp = numbers.concat(Ops)
 let displayValue;
 const equalBtn = document.querySelector('.equal')
+const floatBtn = document.querySelector('.float')
+const backBtn = document.querySelector('.backspace')
 
 equalBtn.addEventListener('click',() => showResult(displayValue))
 clearBtn.addEventListener('click', clear)
-numbers.forEach((item) => item.addEventListener('click', () => display(item.textContent)))
-Ops.forEach((item) => item.addEventListener('click', () => display(' ' + item.textContent + ' ')))
+numbers.forEach((item) => {
+    item.setAttribute('tabindex', '0');
+    item.addEventListener('click', () => display(item.textContent))
+    item.addEventListener('keydown', (event) => {
+        if (event.key === item.textContent) display(item.textContent)
+    })
+})
+Ops.forEach((item) => item.addEventListener('click', () => {display(' ' + item.textContent + ' '); enableFloat()}))
+backBtn.addEventListener('click', () => back())
+equalBtn.addEventListener('keydown', (event) => {if (event.key === 'Enter') showResult(displayValue)})
+
+
+function back() {
+    displayArray = Array.from(visor.textContent)
+    displayArray.pop()
+    visor.textContent = displayArray.join('')
+}
+function enableFloat() {
+    floatBtn.addEventListener('click',() => {
+    display('.')
+}, { once:true })}
+enableFloat()
+
 function display(input) {
     visor.textContent += input
     displayValue = visor.textContent
@@ -94,11 +124,13 @@ function getResult(material) {
         materialArr.splice(index-1,3,firstNumber)
     } else break;
     }
+    if (firstNumber !== Math.floor(firstNumber)) firstNumber = Math.ceil(value * 100) / 100
     return firstNumber;
 }
 function showResult(material) {
     clear()
     display(getResult(material))
+    enableFloat()
 }
 function findFirstIndex(array,toLookFor) {
     let index1 = array.indexOf(toLookFor[0])
